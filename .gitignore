@@ -1,0 +1,31 @@
+# Ignore build artifacts
+/build/
+/bin/
+/obj/
+
+# Ignore temporary files created by the editor
+*~ 
+*.bak
+*.swp
+*.swo
+
+# Ignore compiled files
+*.o
+*.out
+*.a
+*.so
+
+# Ignore ncurses specific terminal history files (if applicable)
+*.log
+
+# Ignore IDE and editor files (if using specific editors)
+.vscode/
+.idea/
+
+# Ignore the Makefile-generated files
+Makefile.user
+Makefile.debug
+
+# Ignore any system-specific files
+.DS_Store
+Thumbs.db
