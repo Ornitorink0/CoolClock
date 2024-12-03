@@ -29,3 +29,6 @@ Makefile.debug
 # Ignore any system-specific files
 .DS_Store
 Thumbs.db
+
+# Ignore the compiled program
+coolclock
