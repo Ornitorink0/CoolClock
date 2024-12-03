@@ -8,6 +8,7 @@ CoolClock is a C++ program that displays the current time in an ASCII art style 
 - Allows switching between different clock fonts.
 - Simple terminal interface using `ncurses`.
 - Dynamic adjustment for terminal window size.
+- Color schemes.
 
 ## Prerequisites
 
@@ -17,7 +18,27 @@ CoolClock is a C++ program that displays the current time in an ASCII art style 
     `sudo pacman -S ncurses`
 - **Make** (for building the project)
 
-## Installation
+### Installation and Uninstallation
+
+To install the program, run the following command in the project directory (replace `sudo` with `su` if needed):
+
+```bash
+sudo make install
+```
+
+This command will install the program and its dependencies on the system.
+
+#### Uninstallation
+
+To uninstall the program, run the following command in the project directory:
+
+```bash
+sudo make uninstall
+```
+
+This command will remove the program and its dependencies from the system.
+
+## Cloning and Building
 
 1. Clone the repository:
 
@@ -26,25 +47,34 @@ CoolClock is a C++ program that displays the current time in an ASCII art style 
    cd CoolClock
    ```
 
-2. Build the project using `make`:
+2. Build the project:
 
    ```bash
-   make
+   make build
    ```
+
+This will create the `coolclock` executable in the current directory and will clean previous build files.
 
 3. Run the program:
 
    ```bash
-   ./CoolClock
+   ./coolclock
    ```
 
 > Please clean up the project directory after use by running `make clean`.
 
 ## Usage
 
-Once the program is running, the current time will be displayed in a pre-defined ASCII art font. The available features are:
+Once the program is installed, you can run it using the following command:
+
+```bash
+coolclock
+```
+
+The current time will be displayed in a pre-defined ASCII art font. The available features are:
 
 - **Change Font**: Press `w` or `W` to cycle through different ASCII art fonts.
+- **Change Color**: Press `c` to cycle through different color schemes.
 - **Quit**: Press `q` or `Q` to exit the program.
 
 **Note**: The program requires a terminal window with at least 6 lines and 55 columns.
