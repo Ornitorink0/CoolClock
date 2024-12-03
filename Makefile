@@ -57,7 +57,7 @@ clean:
 	rm -rf $(OBJ_DIR) $(EXEC)
 
 # Recompile everything
-rebuild: clean all
+build: clean all
 
 # Installation
 install: $(EXEC)
