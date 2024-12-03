@@ -1,17 +1,17 @@
-# Variabili per il compilatore
+# Variables for the compiler
 CXX = g++
 CXXFLAGS = -Wall -g -std=c++17
 
-# Percorso delle librerie
+# Libraries path
 NCURSES_LIBS = -lncurses
 
-# Directory dei sorgenti e degli oggetti
+# Source and object directories
 SRC_DIR = src
 SRC_FONTS = src/fonts
 OBJ_DIR = obj
 OBJ_FONTS_DIR = obj/fonts
 
-# File sorgenti
+# Source files
 SOURCES = \
 	$(SRC_DIR)/main.cpp \
 	$(SRC_DIR)/clockfont.cpp \
@@ -20,7 +20,7 @@ SOURCES = \
 	$(SRC_DIR)/fonts/lines.cpp \
 	$(SRC_DIR)/fonts/doublelines.cpp
 
-# File oggetti
+# Object files
 OBJECTS = \
 	$(OBJ_DIR)/main.o \
 	$(OBJ_DIR)/clockfont.o \
@@ -29,17 +29,21 @@ OBJECTS = \
 	$(OBJ_FONTS_DIR)/lines.o \
 	$(OBJ_FONTS_DIR)/doublelines.o
 
-# Nome dell'eseguibile
-EXEC = CoolClock
+# Executable name
+EXEC = coolclock
 
-# Regola di default per compilare
+# Installation directory
+DESTDIR = /usr/local
+BIN_DIR = $(DESTDIR)/bin
+
+# Default rule to compile
 all: $(EXEC)
 
-# Come compilare l'eseguibile
+# How to compile the executable
 $(EXEC): $(OBJECTS)
 	$(CXX) $(OBJECTS) -o $(EXEC) $(NCURSES_LIBS)
 
-# Come compilare i file oggetto
+# How to compile object files
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 	@mkdir -p $(OBJ_DIR)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
@@ -48,9 +52,19 @@ $(OBJ_FONTS_DIR)/%.o: $(SRC_FONTS)/%.cpp
 	@mkdir -p $(OBJ_FONTS_DIR)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-# Pulizia dei file oggetto ed eseguibili
+# Clean object files and executables
 clean:
 	rm -rf $(OBJ_DIR) $(EXEC)
 
-# Regola per ricompilare tutto
+# Recompile everything
 rebuild: clean all
+
+# Installation
+install: $(EXEC)
+	install -D $(EXEC) $(BIN_DIR)/$(EXEC)
+	@echo "Installed in $(BIN_DIR)/$(EXEC)"
+
+# Uninstallation
+uninstall:
+	rm -f $(BIN_DIR)/$(EXEC)
+	@echo "Uninstalled from $(BIN_DIR)/$(EXEC)"
