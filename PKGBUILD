@@ -5,7 +5,7 @@ pkgdesc="A Way to Flex the Clock on Linux"
 pkgrel=1
 arch=(i686 x86_64)
 depends=(gcc make)
-license=(GPL)
+license=(MIT)
 url="https://"
 pkgauthor="Ornitorink0"
 
