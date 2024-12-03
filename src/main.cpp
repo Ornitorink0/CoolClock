@@ -5,6 +5,25 @@
 #include "clockfont.h"
 
 /**
+ * @brief Shows a simple user menu when `h` is pressed.
+ *
+ * This function prints a menu with options that can be chosen by the user.
+ */
+void showInstructions(int height, int width) {
+    clear();
+
+    attron(COLOR_PAIR(1));
+    mvprintw(height / 2 - 2, width / 2 - 15, "Instructions:");
+    mvprintw(height / 2 - 1, width / 2 - 15, "├ Press `q` or `Q` to quit");
+    mvprintw(height / 2, width / 2 - 15, "├ Press `w` or `W` to change font");
+    mvprintw(height / 2 + 1, width / 2 - 15, "├ Press `c` to change color scheme");
+    mvprintw(height / 2 + 2, width / 2 - 15, "└ Press `h` to hide this menu");
+    attroff(COLOR_PAIR(1));
+
+    refresh();
+}
+
+/**
  * @brief The main function of the program.
  *
  * This function initializes the ncurses library and sets up the
@@ -22,7 +41,19 @@ int main() {
     initscr();
     raw();
     noecho();
+    curs_set(0);
     timeout(1000);
+
+    if (has_colors()) {
+        start_color();
+        init_pair(1, COLOR_YELLOW, COLOR_BLACK);
+        init_pair(2, COLOR_CYAN, COLOR_BLACK);
+        init_pair(3, COLOR_GREEN, COLOR_BLACK);
+        init_pair(4, COLOR_RED, COLOR_BLACK);
+        init_pair(5, COLOR_BLUE, COLOR_BLACK);
+        init_pair(6, COLOR_MAGENTA, COLOR_BLACK);
+        init_pair(7, COLOR_WHITE, COLOR_BLACK);
+    }
 
     char* clockString;
 
@@ -31,6 +62,8 @@ int main() {
 
     char ch;
     int font = 0;
+    int colorScheme = 0;
+    bool showMenuFlag = false;
 
     while (1) {
         getmaxyx(stdscr, height, width);
@@ -50,10 +83,14 @@ int main() {
 
         clockString = getTime((width / 2) - 24, font);
 
-        mvprintw((height / 2) - 3, 0, clockString);
-
-        mvprintw(height - 1, 0, "Press `q` or `Q` to quit");
-        mvprintw(height - 1, width - 4, "Press w to change font");
+        attron(COLOR_PAIR(colorScheme));
+        
+        if (!showMenuFlag) {
+            mvprintw((height / 2) - 3, 0, clockString);
+            mvprintw(height - 1, 0, "Press `h` to show instructions");
+        }
+        
+        attroff(COLOR_PAIR(colorScheme));
 
         ch = getch();
         if (ch == 'q' || ch == 'Q')
@@ -63,10 +100,19 @@ int main() {
             font = (font + 1) % 4;
         }
 
+        if (ch == 'c' || ch == 'C') {
+            colorScheme = (colorScheme % 7) + 1;
+        }
+
+        if (ch == 'h' || ch == 'H') {
+            showMenuFlag = !showMenuFlag;
+            if (showMenuFlag) showInstructions(height, width);
+            else clear();
+        }
+
         refresh();
     }
     clear();
     endwin();
     return 0;
 }
-
